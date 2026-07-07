@@ -3,3 +3,8 @@ management:
     web:
       exposure:
         include: health, info
+
+security:
+ jwt:
+   secret-key: ReplaceThisWithAtLeastA256BitSecretKeyReplaceThisWithAtLeastA256BitSecretKey
+   expiration: 3600000

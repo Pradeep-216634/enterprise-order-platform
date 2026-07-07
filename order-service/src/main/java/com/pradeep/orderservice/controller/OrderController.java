@@ -23,7 +23,7 @@ public class OrderController {
         return "Order Service is running";
     }
 	
-	@PostMapping
+	@PostMapping("/createorder")
 	public ResponseEntity<String> createOrder(
 	        @Valid @RequestBody OrderRequest request) {
 
