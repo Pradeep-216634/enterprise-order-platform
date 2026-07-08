@@ -1,15 +1,36 @@
 package com.pradeep.orderservice.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
-public interface JwtService {
+import com.pradeep.orderservice.config.JwtProperties;
+
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class JwtService {
 	
-	public String generateToken(UserDetails userDetails);
+	private final JwtProperties jwtProperties;
 
-	public String extractUsername(String token);
+	public String generateToken(UserDetails userDetails) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	public boolean isTokenValid(String token, UserDetails userDetails);
+	public String extractUsername(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	public boolean isTokenExpired(String token);
+	public boolean isTokenValid(String token, UserDetails userDetails) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isTokenExpired(String token) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
