@@ -5,9 +5,9 @@ management:
         include: health, info
 spring:
   datasource:
-    url: 
-    username: 
-    password: 
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: pradeep
   jpa:
     hibernate:
       ddl-auto: update
