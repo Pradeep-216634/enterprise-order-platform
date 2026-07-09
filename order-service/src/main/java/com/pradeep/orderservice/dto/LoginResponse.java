@@ -1,5 +1,5 @@
 package com.pradeep.orderservice.dto;
 
-public class LoginResponse {
+public record LoginResponse(String token) {
 
 }
