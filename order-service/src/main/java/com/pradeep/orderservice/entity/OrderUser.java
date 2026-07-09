@@ -19,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class OrderUser {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
