@@ -3,6 +3,18 @@ management:
     web:
       exposure:
         include: health, info
+spring:
+  datasource:
+    url: 
+    username: 
+    password: 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
 security:
  jwt:
