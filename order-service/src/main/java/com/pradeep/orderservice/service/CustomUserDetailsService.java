@@ -6,8 +6,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.pradeep.orderservice.entity.OrderUser;
-import com.pradeep.orderservice.entity.Role;
 import com.pradeep.orderservice.repository.OrderUserRepository;
+import java.util.stream.Collectors;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import lombok.RequiredArgsConstructor;
 
