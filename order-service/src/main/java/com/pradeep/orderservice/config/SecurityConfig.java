@@ -6,23 +6,25 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.pradeep.orderservice.security.JwtAuthenticationFilter;
 import com.pradeep.orderservice.security.JwtService;
+import com.pradeep.orderservice.service.CustomUserDetailsService;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 	
+	private final CustomUserDetailsService customUserDetailsService;
 	
 	@Bean
 	SecurityFilterChain securityFilterChanin(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception{
@@ -47,9 +49,7 @@ public class SecurityConfig {
 	@Bean
 	UserDetailsService userServiceDetails(PasswordEncoder passwordEncoder) {
 		
-		UserDetails admin = User.builder().username("admin").password(passwordEncoder.encode("admin123")).roles("ADMIN").build();
-		 
-		return new InMemoryUserDetailsManager(admin);
+		return customUserDetailsService;
 	}
 
 	@Bean

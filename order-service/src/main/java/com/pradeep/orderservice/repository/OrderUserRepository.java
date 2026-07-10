@@ -11,5 +11,7 @@ import com.pradeep.orderservice.entity.OrderUser;
 public interface OrderUserRepository extends JpaRepository<OrderUser, Long>{
 	
 	Optional<OrderUser> findByUsername(String username);
+	
+	 boolean existsByUsername(String username);
 
 }

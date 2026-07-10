@@ -22,17 +22,18 @@ public class CustomUserDetailsService implements UserDetailsService{
 		
 		OrderUser user = repository.findByUsername(username)
                 .orElseThrow(() ->
-                        new UsernameNotFoundException(username));
+                        new UsernameNotFoundException("User not found: " + username));
 
-        return org.springframework.security.core.userdetails.User
+		return org.springframework.security.core.userdetails.User
                 .builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
+                .disabled(!Boolean.TRUE.equals(user.getEnabled()))
                 .authorities(
-                        user.getRoles()
+                		user.getRoles()
                                 .stream()
-                                .map(Role::getName)
-                                .toArray(String[]::new))
+                                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                                .collect(Collectors.toSet()))
                 .build();
     }
 
