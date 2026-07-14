@@ -40,17 +40,17 @@ public class SecurityConfig {
 	
 	@Bean
 	JwtAuthenticationFilter jwtAuthenticationFilter(
-	        JwtService jwtService,
-	        UserDetailsService userDetailsService) {
+	        JwtService jwtService) {
 
-	    return new JwtAuthenticationFilter(jwtService, userDetailsService);
+	    return new JwtAuthenticationFilter(jwtService, customUserDetailsService);
 	}
 	
-	@Bean
-	UserDetailsService userServiceDetails(PasswordEncoder passwordEncoder) {
-		
-		return customUserDetailsService;
-	}
+	/*
+	 * @Bean UserDetailsService userServiceDetails(PasswordEncoder passwordEncoder)
+	 * {
+	 * 
+	 * return customUserDetailsService; }
+	 */
 
 	@Bean
 	PasswordEncoder passwordEncoder() {

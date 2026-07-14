@@ -1,0 +1,16 @@
+ALTER TABLE roles
+ADD COLUMN created_at TIMESTAMP;
+
+ALTER TABLE roles
+ADD COLUMN updated_at TIMESTAMP;
+
+UPDATE roles
+SET created_at = CURRENT_TIMESTAMP,
+    updated_at = CURRENT_TIMESTAMP
+WHERE created_at IS NULL;
+
+ALTER TABLE roles
+ALTER COLUMN created_at SET NOT NULL;
+
+ALTER TABLE roles
+ALTER COLUMN updated_at SET NOT NULL;
