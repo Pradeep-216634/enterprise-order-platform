@@ -12,7 +12,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +23,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
 public class OrderUser extends BaseEntity{
 	
 
@@ -39,6 +37,7 @@ public class OrderUser extends BaseEntity{
 	    private Boolean enabled;
 
 	    @ManyToMany(fetch = FetchType.EAGER)
+	    @Builder.Default
 	    @JoinTable(
 	        name = "user_roles",
 	        joinColumns = @JoinColumn(name = "user_id"),
