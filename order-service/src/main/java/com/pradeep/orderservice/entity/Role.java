@@ -37,7 +37,7 @@ public class Role extends BaseEntity {
 
     @ManyToMany(mappedBy = "roles")
     @Builder.Default
-    private Set<OrderUser> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
 	
 }

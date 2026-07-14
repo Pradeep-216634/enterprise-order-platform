@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderUser extends BaseEntity{
+public class User extends BaseEntity{
 	
 
 	 @Column(nullable = false,
