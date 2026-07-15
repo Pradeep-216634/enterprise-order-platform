@@ -2,6 +2,8 @@ package com.pradeep.orderservice.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pradeep.orderservice.dto.OrderRequest;
 import com.pradeep.orderservice.dto.OrderResponse;
+import com.pradeep.orderservice.dto.OrderSearchRequest;
 import com.pradeep.orderservice.security.UserPrincipal;
 import com.pradeep.orderservice.service.OrderService;
 
@@ -79,6 +82,17 @@ public class OrderController {
 		return ResponseEntity.ok(orderService.getOrderById(id, principal));
 	}
 	
+	@GetMapping
+	@PreAuthorize("hasAnyRole('ADMIN','USER')")
+	public ResponseEntity<Page<OrderResponse>> getAllOrders(
+	        Pageable pageable) {
+
+	    return ResponseEntity.ok(orderService.getAllOrders(pageable));
+	}
 	
+	@GetMapping("/search")
+	public ResponseEntity<Page<OrderResponse>> searchOrders(OrderSearchRequest request,	Pageable pageable) {
+		return ResponseEntity.ok(orderService.searchOrders(request, pageable));
+	}
 
 }

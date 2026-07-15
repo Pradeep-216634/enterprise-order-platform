@@ -1,9 +1,12 @@
 package com.pradeep.orderservice.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pradeep.orderservice.dto.OrderRequest;
 import com.pradeep.orderservice.dto.OrderResponse;
+import com.pradeep.orderservice.dto.OrderSearchRequest;
 import com.pradeep.orderservice.security.UserPrincipal;
 
 @Service
@@ -22,5 +25,8 @@ public interface OrderService {
 	        UserPrincipal principal);
 	void deleteOrder(Long id,
 	        UserPrincipal principal);
+	
+	Page<OrderResponse> getAllOrders(Pageable pageable);
+	Page<OrderResponse> searchOrders(OrderSearchRequest request, Pageable pageable);
 
 }
