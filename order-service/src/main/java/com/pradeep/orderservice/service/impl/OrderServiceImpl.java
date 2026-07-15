@@ -17,6 +17,9 @@ import com.pradeep.orderservice.security.UserPrincipal;
 import com.pradeep.orderservice.service.OrderService;
 import com.pradeep.orderservice.specification.OrderSpecification;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,6 +42,7 @@ public OrderResponse createOrder(OrderRequest request, UserPrincipal principal) 
 
 @Override
 @Transactional(readOnly = true)
+@Cacheable(value = "orders", key = "#id")
 public OrderResponse getOrderById(Long id, UserPrincipal principal) {
 	Order order = null;
 	try {
@@ -56,6 +60,7 @@ public OrderResponse getOrderById(Long id, UserPrincipal principal) {
 
 @Override
 @Transactional
+@CachePut(value = "orders", key = "#id")
 public OrderResponse updateOrder(OrderRequest request, Long id, UserPrincipal principal) {
 	Order order = orderRepository.findById(id)
             .orElseThrow(() ->
@@ -71,6 +76,7 @@ public OrderResponse updateOrder(OrderRequest request, Long id, UserPrincipal pr
 
 @Override
 @Transactional
+@CacheEvict(value = "orders", key = "#id")
 public void deleteOrder(Long id, UserPrincipal principal) {
 	Order order = orderRepository.findById(id)
             .orElseThrow(() ->
