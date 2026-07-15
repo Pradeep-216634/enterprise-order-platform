@@ -32,11 +32,11 @@ public abstract class BaseEntity {
     private Long version;
 
     @CreatedDate
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime updatedAt;
     
     @CreatedBy

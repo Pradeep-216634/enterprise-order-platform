@@ -12,5 +12,15 @@ public interface OrderService {
 	OrderResponse createOrder(
 	        OrderRequest request,
 	        UserPrincipal principal);
+	
+	OrderResponse getOrderById(
+	        Long id,
+	        UserPrincipal principal);
+	
+	OrderResponse updateOrder(OrderRequest request,
+	        Long id,
+	        UserPrincipal principal);
+	void deleteOrder(Long id,
+	        UserPrincipal principal);
 
 }

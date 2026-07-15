@@ -49,6 +49,15 @@ public class OrderController {
 	            .body(response);
 	}
 	
+	@PostMapping("/createorder")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<OrderResponse> updateOrder(@Valid @RequestBody OrderRequest request, 
+	        @PathVariable Long id, @AuthenticationPrincipal UserPrincipal principal){
+		
+		return ResponseEntity.ok(orderService.updateOrder(request, id, principal));
+		
+	}
+	
 	@GetMapping("/getorders")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public List<OrderDto> getOrders() {
@@ -57,16 +66,17 @@ public class OrderController {
 	
 	@DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteOrder(@PathVariable Long id) {
-
+    public ResponseEntity<Object> deleteOrder(@PathVariable Long id, @AuthenticationPrincipal UserPrincipal principal) {
+		orderService.getOrderById(id, principal);
+		return ResponseEntity.noContent().build();
     }
 	
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN','USER')")
 	public ResponseEntity<OrderResponse> getOrderById(
-	        @PathVariable Long id) {
+	        @PathVariable Long id, @AuthenticationPrincipal UserPrincipal principal) {
 
-	    return null;//ResponseEntity.ok(orderService.getOrderById(id));
+		return ResponseEntity.ok(orderService.getOrderById(id, principal));
 	}
 	
 	
