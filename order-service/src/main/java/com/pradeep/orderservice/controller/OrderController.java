@@ -23,6 +23,10 @@ import com.pradeep.orderservice.dto.OrderSearchRequest;
 import com.pradeep.orderservice.security.UserPrincipal;
 import com.pradeep.orderservice.service.OrderService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/orders")
 @Slf4j
 @RequiredArgsConstructor
+@Tag(name = "Order API", description = "Order Management APIs")
 public class OrderController {
 	
 	private final OrderService orderService;
@@ -41,6 +46,13 @@ public class OrderController {
         return "Order Service is running";
     }
 	
+	@Operation(
+	        summary = "Create Order",
+	        description = "Creates a new order"
+	)
+	@ApiResponses({ @ApiResponse(responseCode = "201", description = "Order created"),
+			@ApiResponse(responseCode = "400", description = "Validation failed"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized") })
 	@PostMapping("/createorder")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<OrderResponse> createOrder(

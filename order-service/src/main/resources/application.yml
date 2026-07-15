@@ -2,7 +2,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info
+        include: health,info,metrics,prometheus
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/orderdb
