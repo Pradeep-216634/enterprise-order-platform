@@ -45,16 +45,11 @@ public OrderResponse createOrder(OrderRequest request, UserPrincipal principal) 
 @Cacheable(value = "orders", key = "#id")
 public OrderResponse getOrderById(Long id, UserPrincipal principal) {
 	Order order = null;
-	try {
 		order = orderRepository.findById(id)
 		        .orElseThrow(() ->
 		                new OrderNotFoundException(
 		                        "Order not found with id : " + id));
-	} catch (OrderNotFoundException e) {
-		
-		log.error("Exception occurred while fetching the order");
-	}
-
+		log.info("Order fetched from DB");
     return orderMapper.toResponse(order);
 }
 

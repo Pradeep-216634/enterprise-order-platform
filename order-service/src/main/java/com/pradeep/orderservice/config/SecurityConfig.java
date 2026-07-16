@@ -37,7 +37,7 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable()).exceptionHandling(ex ->
 	            ex.accessDeniedHandler(accessDeniedHandler)).
 				authorizeHttpRequests(auth -> auth.requestMatchers("/actuator/health","/api/orders/health", 
-						"/api/auth/login")
+						"/api/auth/login", "/error")
 						.permitAll().anyRequest().authenticated()).addFilterBefore(
 					            jwtAuthenticationFilter,
 					            UsernamePasswordAuthenticationFilter.class)
