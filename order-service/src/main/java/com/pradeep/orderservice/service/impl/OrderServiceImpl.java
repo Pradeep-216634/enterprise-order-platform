@@ -11,6 +11,8 @@ import com.pradeep.orderservice.dto.OrderSearchRequest;
 import com.pradeep.orderservice.dto.OrderStatus;
 import com.pradeep.orderservice.entity.Order;
 import com.pradeep.orderservice.exception.OrderNotFoundException;
+import com.pradeep.orderservice.kafka.event.OrderCreatedEvent;
+import com.pradeep.orderservice.kafka.producer.OrderEventProducer;
 import com.pradeep.orderservice.mapper.OrderMapper;
 import com.pradeep.orderservice.repository.OrderRepository;
 import com.pradeep.orderservice.security.UserPrincipal;
@@ -29,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderServiceImpl implements OrderService{
 	private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final OrderEventProducer orderEventProducer;
 	
 @Override
 @Transactional
@@ -36,7 +39,16 @@ public OrderResponse createOrder(OrderRequest request, UserPrincipal principal) 
 	Order order = orderMapper.toEntity(request);
 	order.setStatus(OrderStatus.CREATED);
 	Order savedOrder = orderRepository.save(order);
-
+	orderEventProducer.publish(
+		    new OrderCreatedEvent(
+		            savedOrder.getId(),
+		            savedOrder.getCustomerName(),
+		            savedOrder.getProductName(),
+		            savedOrder.getQuantity(),
+		            savedOrder.getAmount(),
+		            savedOrder.getStatus(),
+		            principal.getUsername()
+		    ));
     return orderMapper.toResponse(savedOrder);
 }
 

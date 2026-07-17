@@ -2,6 +2,8 @@ package com.pradeep.orderservice.kafka.event;
 
 import java.math.BigDecimal;
 
+import com.pradeep.orderservice.dto.OrderStatus;
+
 public record OrderCreatedEvent(
 		Long orderId,
 
@@ -13,9 +15,10 @@ public record OrderCreatedEvent(
 
         BigDecimal amount,
 
-        String status,
+        OrderStatus status,
 
         String createdBy
+		
 		) {
 
 }
