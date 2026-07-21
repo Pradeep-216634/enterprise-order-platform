@@ -25,20 +25,21 @@ spring:
       port: 6379
       timeout: 2000
   kafka:
-    bootstrap-servers: localhost:9094
+    bootstrap-servers: localhost:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer	
     consumer:
-      group-id: order-group
+      group-id: order-group-test
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: com.pradeep.orderservice.kafka.event.OrderCreatedEvent
-        spring.json.value.default.type: com.pradeep.orderservice.kafka.event.OrderCreatedEvent
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 security:
  jwt:
-   secret-key: ReplaceThisWithAtLeastA256BitSecretKeyReplaceThisWithAtLeastA256BitSecretKey
+   secret-key: ReplaceThisWithAtLeastA256BitSeacretKeyReplaceThisWithAtLeastA256BitSecretKey
    expiration: 3600000
+ logging:
+   level:
+     org.springframework.kafka.listener: TRACE
+     org.apache.kafka.clients.consumer: TRACE
