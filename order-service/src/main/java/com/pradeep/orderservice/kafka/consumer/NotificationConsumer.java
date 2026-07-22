@@ -11,9 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NotificationConsumer {
 
-    @KafkaListener(
-            topics = "order-created",
-            groupId = "notification-group")
+    //@KafkaListener(topics = "order-created", groupId = "notification-group")
     public void sendNotification(OrderCreatedEvent event) {
 
         log.info("======= NOTIFICATION =======");

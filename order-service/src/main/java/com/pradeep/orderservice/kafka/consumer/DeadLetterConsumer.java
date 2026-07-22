@@ -11,9 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DeadLetterConsumer {
 	
-	@KafkaListener(
-            topics = "order-created-dlt",
-            groupId = "dlq-group")
+	//@KafkaListener(topics = "order-created-dlt", groupId = "dlq-group")
     public void processFailedOrder(OrderCreatedEvent event) {
 
         log.error("===== MESSAGE RECEIVED FROM DLQ =====");

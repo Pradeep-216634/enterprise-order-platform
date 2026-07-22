@@ -1,6 +1,7 @@
 package com.pradeep.orderservice.kafka.consumer;
 
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 import com.pradeep.orderservice.kafka.event.OrderCreatedEvent;
@@ -14,12 +15,9 @@ public class InventoryConsumer {
 	@KafkaListener(
             topics = "order-created",
             groupId = "inventory-group")
-    public void reserveInventory(OrderCreatedEvent event) {
-		
-		if (event.orderId() % 2 == 0) {
-	        throw new RuntimeException("Inventory database is down");
-	    }
-
+    public void reserveInventory(OrderCreatedEvent event,
+            Acknowledgment acknowledgment) {
+	
         log.info("========== INVENTORY ==========");
         log.info("Reserving stock...");
         log.info("Order : {}", event.orderId());
@@ -27,6 +25,14 @@ public class InventoryConsumer {
         log.info("Quantity : {}", event.quantity());
         log.info("Inventory Reserved Successfully");
         log.info("===============================");
+        
+		/*
+		 * if(event.orderId() % 2 == 0) { throw new
+		 * RuntimeException("Invertory DB not working"); }
+		 */
+        acknowledgment.acknowledge();
+
+        log.info("Offset committed");
     }
 
 }

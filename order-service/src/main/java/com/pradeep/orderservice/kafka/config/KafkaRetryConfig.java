@@ -15,17 +15,25 @@ public class KafkaRetryConfig {
 	
 	
 	@Bean
-    public DefaultErrorHandler errorHandler(KafkaTemplate<Object, Object> kafkaTemplate) {
+	public DefaultErrorHandler errorHandler(KafkaTemplate<Object, Object> kafkaTemplate) {
 
-        DeadLetterPublishingRecoverer recoverer =
-                new DeadLetterPublishingRecoverer(
-                        kafkaTemplate,
-                        (record, ex) ->
-                                new TopicPartition(record.topic() + "-dlt", record.partition()));
+	    DeadLetterPublishingRecoverer recoverer =
+	        new DeadLetterPublishingRecoverer(
+	            kafkaTemplate,
+	            (record, ex) -> {
+	                ex.printStackTrace();   // <-- IMPORTANT
+	                return new TopicPartition(record.topic() + "-dlt", record.partition());
+	            });
 
-        FixedBackOff backOff = new FixedBackOff(2000L, 3);
+	    DefaultErrorHandler handler =
+	        new DefaultErrorHandler(recoverer, new FixedBackOff(2000L, 3));
 
-        return new DefaultErrorHandler(recoverer, backOff);
-    }
+	    handler.setRetryListeners((record, ex, deliveryAttempt) -> {
+	        System.out.println("Retry " + deliveryAttempt);
+	        ex.printStackTrace();          // <-- IMPORTANT
+	    });
+
+	    return handler;
+	}
 
 }

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OrderCreatedConsumer {
 	
-	@KafkaListener(topics = "order-created", groupId = "audit-group")
+	//@KafkaListener(topics = "order-created", groupId = "audit-group")
 public void consume(OrderCreatedEvent event) {
 
 		log.info("====================================");
